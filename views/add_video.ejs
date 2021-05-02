@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include templates/head.ejs %>
+  
+  </head>
+
+  <body>
+    <% include templates/navbar.ejs %>
+
+    <div class="content-container">
+
+      <div class="container-fluid">
+
+
+        <h2> Add Video </h2>
+
+
+
+        <form action="/add-video" method="POST">
+          <div class="form-group row">
+            <label for="video_url" class="col-sm-2 col-form-label">Video URL</label>
+            <div class="col-sm-10">
+              <input name="video_url" type="text" class="form-control" id="video_url">
+            </div>
+          </div>
+          
+          <!-- <fieldset class="form-group">
+            <div class="row">
+              <legend class="col-form-label col-sm-2 pt-0">Category</legend>
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                  <label class="form-check-label" for="gridRadios1">
+                    Personal
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                  <label class="form-check-label" for="gridRadios2">
+                    Work
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
+                  <label class="form-check-label" for="gridRadios3">
+                    School
+                  </label>
+                </div>
+              </div>
+            </div>
+          </fieldset> -->
+          
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-success"> <i class="fa fa-send" ></i> Submit Video </button>
+            </div>
+          </div>
+        </form>
+      
+      
+      </div>
+    
+    
+    
+    </div>
+
+
+  </body>
+</html>
