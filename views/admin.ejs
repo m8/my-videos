@@ -10,14 +10,60 @@
   <% include templates/navbar.ejs %>
 
 
-    <div class="container">
+  <div class="content-container">
+
+    <div class="container-fluid">
 
       <h2>Admin Page</h2>
 
 
+      <ul class="nav nav-tabs " role="tablist">
+        <li class="nav-link active"><a data-toggle="tab" href="#home">Users</a></li>
+        <li class="nav-link"><a data-toggle="tab" href="#menu1">Videos</a></li>
+      </ul>
+      
+      <div class="tab-content ">
+        <div id="home" class="tab-pane active">
+          <h3 class="py-2">Users Table</h3>
 
-    </div>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">E-Mail</th>
+                <th scope="col">Username</th>
+              </tr>
+            </thead>
 
+            <tbody>
+
+              <% for(var i=0; i < users.length; i++) { %>
+                <tr>
+                  <td><%= users[i].id %></td>
+                  <td><%= users[i].name %></td>
+                  <td><%= users[i].name %></td>
+                  <td><%= users[i].email %></td>
+                  <td><%= users[i].username %></td>
+                </tr>
+             <% } %>
+
+            </tbody>
+
+          </table>
+
+
+        </div>
+        <div id="menu1" class="tab-pane fade">
+          <h3>Menu 1</h3>
+          <p>Some content in menu 1.</p>
+        </div>
+
+      </div>
+
+      </div>
+      </div>
 </body>
 
 </html>
