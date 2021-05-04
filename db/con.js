@@ -6,6 +6,9 @@ var con = mysql.createConnection({
     host: "localhost",
     user: defaults.db.user,
     password: defaults.db.password,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
 
 con.connect(async function(err) {
@@ -17,9 +20,12 @@ con.connect(async function(err) {
       console.log("Database created");
     });
 
-    await con.query(queries.use_db, function (err, result) {
-        if (err) throw err;
+    await con.changeUser({
+        database: "myvideos"
     });
+    // await con.query(queries.use_db, function (err, result) {
+    //     if (err) throw err;
+    // });
     
     await con.query(queries.create_user
         ,function (err, result) {
@@ -68,8 +74,6 @@ con.connect(async function(err) {
         if (err) throw err;
         console.log("category_has_video table created");
     });
-
-    con.end();
 
 });
 

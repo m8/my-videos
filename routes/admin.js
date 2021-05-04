@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var queries = require('../db/query');
-var con = require('../db/conn');
+var con = require('../db/con');
 
 
 /* GET admin page. */
