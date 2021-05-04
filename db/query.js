@@ -3,7 +3,7 @@ const get_user = "SELECT * FROM user";
 const create_db = "CREATE DATABASE IF NOT EXISTS myvideos";
 const use_db = "USE myvideos";
 const create_user = `CREATE TABLE IF NOT EXISTS user (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     email VARCHAR(45) UNIQUE NOT NULL,
     name VARCHAR(45) NOT NULL,
     surname VARCHAR(45) NOT NULL,
@@ -14,7 +14,7 @@ const create_user = `CREATE TABLE IF NOT EXISTS user (
 `;
 
 const create_video = `CREATE TABLE IF NOT EXISTS video (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     url VARCHAR(45) UNIQUE NOT NULL,
     name VARCHAR(45) NOT NULL,
     source VARCHAR(45) NOT NULL,
@@ -56,7 +56,7 @@ const create_user_has_video = `CREATE TABLE IF NOT EXISTS user_has_video (
   );`
 
 const create_category_has_video = `CREATE TABLE IF NOT EXISTS category_has_video (
-    category_uuid VARCHAR(50) NOT NULL,
+    category_uuid VARCHAR(50) NOT NULL ,
     video_id INT NOT NULL,
     PRIMARY KEY (category_uuid, video_id),
   
@@ -72,7 +72,7 @@ const create_category_has_video = `CREATE TABLE IF NOT EXISTS category_has_video
   );`
 
 const create_channel = `CREATE TABLE IF NOT EXISTS channel (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     url VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
   );`
@@ -115,8 +115,6 @@ const create_category_has_channel = ` CREATE TABLE IF NOT EXISTS category_has_ch
     ON UPDATE CASCADE
 );
 `
-
-
 
 module.exports = {get_user, create_category, create_user_has_video, create_user_has_video, create_category_has_video, create_channel, create_db, use_db, create_user, create_video,create_user_has_video,create_category_has_channel,create_user_follows_channel };
 
