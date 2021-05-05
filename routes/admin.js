@@ -8,29 +8,9 @@ var connectionPool = require('../db/conn');
 router.get('/', async function (req, res, next) {
     const connection = await connectionPool.getConnection();
 
-    const [userRows, fields] = await connection.execute("select * from user")
+    const [userRows, fields] = await connection.execute("SELECT * FROM user")
     const [videoRows, videoFields] = await connection.execute("SELECT * FROM video")
 
-
-    /* con.query("select * from user", function (err, result) {
-        console.log("result 1", result);
-        if (err) {
-            throw Error("there is a problem fetching users");
-        }
-        users = result;
-    }); */
-
-    /* console.log("users", users)
-
-    con.query("select * from video", function (err, result) {
-        console.log("result 2", result);
-        if (err) {
-            throw Error("there is a problem fetching users");
-        }
-        videos = result;
-    });
-
-    console.log("users", users) */
     res.render('admin', { users: userRows, videos: videoRows });
 
 });
