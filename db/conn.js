@@ -1,17 +1,20 @@
-var mysql = require("mysql");
+var mysql = require("mysql2/promise");
 var defaults = require("./defaults");
 var queries = require('./query');
 
-var con = mysql.createConnection({
+connectionConfig = {
     host: "localhost",
     user: defaults.db.user,
     password: defaults.db.password,
+    "database": "myvideos",
     waitForConnections: true,
-    connectionLimit: 10,
+    connectionLimit: 100,
     queueLimit: 0
-});
+};
 
-con.connect(async function (err) {
+var connectionPool = mysql.createPool(connectionConfig)
+
+/* con.connect(async function (err) {
     if (err) throw err;
     console.log("Connected!");
 
@@ -75,7 +78,7 @@ con.connect(async function (err) {
             console.log("category_has_video table created");
         });
 
-});
+}); */
 
 
-module.exports = con;
+module.exports = connectionPool;

@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 var videoRouter = require('./routes/add_video');
 var adminRouter = require('./routes/admin');
 
-var con = require('./db/conn');
+/* var con = require('./db/conn') */
 
 
 var app = express();

@@ -18,7 +18,7 @@
 
 
         <ul class="nav nav-tabs " role="tablist">
-          <li class="nav-link active"><a data-toggle="tab" href="#home">Users</a></li>
+          <li class="nav-link"><a data-toggle="tab" href="#home">Users</a></li>
           <li class="nav-link"><a data-toggle="tab" href="#menu1">Videos</a></li>
         </ul>
 
@@ -26,11 +26,7 @@
           <div id="home" class="tab-pane active">
             <h3 class="py-2">Users Table</h3>
 
-
-           
-
             <table class="table table-striped">
-
 
               <thead>
                 <tr>
@@ -41,7 +37,7 @@
                   <th scope="col">Username</th>
                 </tr>
               </thead>
-
+              <% if (users) { %>
               <tbody>
                 <% for(var i=0; i < users.length; i++) { %>
                   <tr>
@@ -64,6 +60,7 @@
                   <% } %>
 
               </tbody>
+              <% } %>
             </table>
 
 
@@ -94,8 +91,69 @@
 
           </div>
           <div id="menu1" class="tab-pane fade">
-            <h3>Menu 1</h3>
-            <p>Some content in menu 1.</p>
+            <h3 class="py-2">Videos Table</h3>
+            <table class="table table-striped">
+
+
+              <thead>
+                <tr>
+                  <th scope="col">id</th>
+                  <th scope="col">Url</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Source</th>
+                  <th scope="col">Duration</th>
+                </tr>
+              </thead>
+              <% if (videos) { %>
+              <tbody>
+                <% for(var i=0; i < videos.length; i++) { %>
+                  <tr>
+                    <td>
+                      <%= videos[i].id %>
+                    </td>
+                    <td>
+                      <%= videos[i].url %>
+                    </td>
+                    <td>
+                      <%= videos[i].name %>
+                    </td>
+                    <td>
+                      <%= videos[i].source %>
+                    </td>
+                    <td>
+                      <%= videos[i].duration %>
+                    </td>
+                  </tr>
+                  <% } %>
+
+              </tbody>
+              <% } %>
+              
+            </table>
+
+
+            <form action="/admin/add-video" method="POST">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Url</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Source</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> <input class="input" name="url"> </td>
+                    <td> <input class="input" name="name"> </td>
+                    <td> <input class="input" name="source"> </td>
+                    <td> <input class="input" name="duration"> </td>
+                    <td> <button type="submit" class="btn btn-warning">Add</button> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
           </div>
 
         </div>
