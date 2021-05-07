@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include templates/head.ejs %>
+    <link rel="stylesheet" href="style/login.css">
+  </head>
+
+
+  <body>
+   
+    <form action="/login" method="POST" class="form-signin">
+      <h1 class="h3 mb-3 font-weight-normal" style="text-align: center; color: darkgray;">My Videos</i></h1>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input name="username" type="text" id="username" class="form-control" placeholder="Username" required autofocus>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <!-- <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div> -->
+      <button class="btn btn-lg btn-secondary btn-block" type="submit">Sign in</button>
+    </form>
+
+    
+  </body>
+</html>

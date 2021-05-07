@@ -3,13 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var videoRouter = require('./routes/add_video');
 var adminRouter = require('./routes/admin');
-
-/* var con = require('./db/conn') */
 
 
 var app = express();
@@ -25,7 +24,18 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+app.use(cookieParser());
 
+// initialize express-session to allow us track the logged-in user across sessions.
+app.use(session({
+    key: 'user_session',
+    secret: 'f480a7d3-9270-4013-9902-99169c0e46c8',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
+}));
 
 
 app.use('/', indexRouter);

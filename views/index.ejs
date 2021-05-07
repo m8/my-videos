@@ -8,11 +8,48 @@
   <body>
     <% include templates/navbar.ejs %>
 
-
     <div class="content-container">
-            <h2>This is the index page</h2>
-        
 
+      <div class="container-fluid">
+
+        <h3>Welcome to My Videos <i class="fa fa-camera"></i></h3>
+        <hr>
+        Hello, <%= name %> Your recent videos:
+
+        <table class="table table-striped my-4">
+
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">URL</th>
+              <th scope="col">Rating</th>
+              <th scope="col">Details</th>
+            </tr>
+          </thead>
+          <% if (videos) { %>
+          <tbody>
+            <% for(var i=0; i < videos.length; i++) { %>
+              <tr>
+                <td>
+                  <%= videos[i].name %>
+                </td>
+                <td>
+                  <a href="<%= videos[i].url %>"><%= videos[i].url %></a> 
+                </td>
+                <td>
+                  <%= videos[i].rating %>
+                </td>
+                <td>
+                  <a href="" class="btn btn-success"><i class="fa fa-submit">Details</i></a>
+                </td>
+              </tr>
+              <% } %>
+
+          </tbody>
+          <% } %>
+        </table>
+        
+      </div>
     </div>
     
   </body>
