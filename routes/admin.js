@@ -15,6 +15,15 @@ router.get('/', async function (req, res, next) {
 
 });
 
+
+router.get('/add-user', (req, res, next) => {
+    res.render('add_user')
+})
+
+router.get('/add-video', (req, res, next) => {
+    res.render('admin_add_video')
+})
+
 router.post('/add-user', async function (req, res, next) {
     const { name, surname, email, username, password } = req.body;
     const connection = await connectionPool.getConnection();

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    <% include templates/head.ejs %>
+    </head>
+
+    <body>
+
+        <% include templates/navbar.ejs %>
+        <div class="content-container">
+            <div class="container-fluid">
+                <h2 class="text-info">Add New User</h2>
+                <form action="/admin/add-user" method="POST">
+                    <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" id="exampleInputEmail1">
+                    </div>
+                    <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Surname</label>
+                    <input type="text" class="form-control" name="surname" id="exampleInputEmail1">
+                    </div>
+                    <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" id="exampleInputEmail1">
+                    </div>
+                    <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Username</label>
+                    <input type="text" class="form-control" name="username" id="exampleInputEmail1">
+                    </div>
+        
+                    <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" id="exampleInputEmail1">
+                    </div>
+        
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Add User</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

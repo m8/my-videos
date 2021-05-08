@@ -24,8 +24,11 @@
 
         <div class="tab-content ">
           <div id="home" class="tab-pane active">
-            <h3 class="py-2">Users Table</h3>
-
+              
+<div class="d-flex py-2 flex-row justify-content-between">
+                  <h3 >Users Table</h3>
+                  <a class="btn btn-primary" href="/admin/add-user" role="button"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Add New User</a>
+              </div>
             <table class="table table-striped">
 
               <thead>
@@ -62,36 +65,13 @@
               </tbody>
               <% } %>
             </table>
-
-
-            <form action="/admin/add-user" method="POST">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Surname</th>
-                    <th scope="col">E-Mail</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Password</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td> <input class="input" name="name"> </td>
-                    <td> <input class="input" name="surname"> </td>
-                    <td> <input class="input" name="email"> </td>
-                    <td> <input class="input" name="username"> </td>
-                    <td> <input class="input" name="password"> </td>
-                    <td> <button type="submit" class="btn btn-warning">Add</button> </td>
-                  </tr>
-                </tbody>
-              </table>
-            </form>
-
           </div>
+
           <div id="menu1" class="tab-pane fade">
-            <h3 class="py-2">Videos Table</h3>
+            <div class="d-flex py-2 flex-row justify-content-between">
+                <h3 >Videos Table</h3>
+                <a class="btn btn-primary" href="/admin/add-video" role="button"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Add New Video</a>
+            </div>
             <table class="table table-striped">
 
 
@@ -131,30 +111,6 @@
               <% } %>
               
             </table>
-
-
-            <form action="/admin/add-video" method="POST">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Url</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Source</th>
-                    <th scope="col">Duration</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td> <input class="input" name="url"> </td>
-                    <td> <input class="input" name="name"> </td>
-                    <td> <input class="input" name="source"> </td>
-                    <td> <input class="input" name="duration"> </td>
-                    <td> <button type="submit" class="btn btn-warning">Add</button> </td>
-                  </tr>
-                </tbody>
-              </table>
-            </form>
           </div>
 
         </div>
