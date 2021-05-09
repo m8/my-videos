@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var queries = require('../db/query');
 var connectionPool = require('../db/conn');
-
+var models = require('./models/admin_models');
 
 /* GET admin page. */
 router.get('/', async function (req, res, next) {
@@ -15,16 +15,16 @@ router.get('/', async function (req, res, next) {
 
 });
 
-
 router.get('/add-user', (req, res, next) => {
-    res.render('add_user')
+    res.render('admin_add_db',{form: models.add_user_model})
 })
 
 router.get('/add-video', (req, res, next) => {
-    res.render('admin_add_video')
+    res.render('admin_add_db',{form: models.add_video_model})
 })
 
 router.post('/add-user', async function (req, res, next) {
+
     const { name, surname, email, username, password } = req.body;
     const connection = await connectionPool.getConnection();
     const query = "INSERT INTO user (name, surname, email, username, password) VALUES(?, ?, ?, ?, ?)"
