@@ -18,17 +18,22 @@
 
 
         <ul class="nav nav-tabs " role="tablist">
-          <li class="nav-link"><a data-toggle="tab" href="#home">Users</a></li>
-          <li class="nav-link"><a data-toggle="tab" href="#menu1">Videos</a></li>
+          <li class="nav-link"><a data-toggle="tab" href="#user">Users</a></li>
+          <li class="nav-link"><a data-toggle="tab" href="#video">Videos</a></li>
+          <li class="nav-link"><a data-toggle="tab" href="#channel">Channels</a></li>
+          <li class="nav-link"><a data-toggle="tab" href="#category">Categories</a></li>
+
         </ul>
 
         <div class="tab-content ">
-          <div id="home" class="tab-pane active">
-              
-<div class="d-flex py-2 flex-row justify-content-between">
-                  <h3 >Users Table</h3>
-                  <a class="btn btn-primary" href="/admin/add-user" role="button"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Add New User</a>
-              </div>
+
+          <div id="user" class="tab-pane active">
+
+            <div class="d-flex py-2 flex-row justify-content-between">
+              <h3>Users Table</h3>
+              <a class="btn btn-primary" href="/admin/add-user" role="button"><i class="fa fa-plus mr-2"
+                  aria-hidden="true"></i>Add New User</a>
+            </div>
             <table class="table table-striped">
 
               <thead>
@@ -38,43 +43,46 @@
                   <th scope="col">Surname</th>
                   <th scope="col">E-Mail</th>
                   <th scope="col">Username</th>
+                  <th></th>
                 </tr>
               </thead>
               <% if (users) { %>
-              <tbody>
-                <% for(var i=0; i < users.length; i++) { %>
-                  <tr>
-                    <td>
-                      <%= users[i].id %>
-                    </td>
-                    <td>
-                      <%= users[i].name %>
-                    </td>
-                    <td>
-                      <%= users[i].name %>
-                    </td>
-                    <td>
-                      <%= users[i].email %>
-                    </td>
-                    <td>
-                      <%= users[i].username %>
-                    </td>
-                  </tr>
-                  <% } %>
+                <tbody>
+                  <% for(var i=0; i < users.length; i++) { %>
+                    <tr>
+                      <td>
+                        <%= users[i].id %>
+                      </td>
+                      <td>
+                        <%= users[i].name %>
+                      </td>
+                      <td>
+                        <%= users[i].name %>
+                      </td>
+                      <td>
+                        <%= users[i].email %>
+                      </td>
+                      <td>
+                        <%= users[i].username %>
+                      </td>
+                      <td>
+                        <a class="btn btn-danger" href="admin/delete/user/<%= users[i].id %>">Delete</a>
+                      </td>
+                    </tr>
+                    <% } %>
 
-              </tbody>
-              <% } %>
+                </tbody>
+                <% } %>
             </table>
           </div>
 
-          <div id="menu1" class="tab-pane fade">
+          <div id="video" class="tab-pane fade">
             <div class="d-flex py-2 flex-row justify-content-between">
-                <h3 >Videos Table</h3>
-                <a class="btn btn-primary" href="/admin/add-video" role="button"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Add New Video</a>
+              <h3>Videos Table</h3>
+              <a class="btn btn-primary" href="/admin/add-video" role="button"><i class="fa fa-plus mr-2"
+                  aria-hidden="true"></i>Add New Video</a>
             </div>
             <table class="table table-striped">
-
-
               <thead>
                 <tr>
                   <th scope="col">id</th>
@@ -85,33 +93,72 @@
                 </tr>
               </thead>
               <% if (videos) { %>
-              <tbody>
-                <% for(var i=0; i < videos.length; i++) { %>
-                  <tr>
-                    <td>
-                      <%= videos[i].id %>
-                    </td>
-                    <td>
-                      <a href="<%= videos[i].url %>" target="_blank"><%= videos[i].url %></a>
-                      
-                    </td>
-                    <td>
-                      <%= videos[i].name %>
-                    </td>
-                    <td>
-                      <%= videos[i].source %>
-                    </td>
-                    <td>
-                      <%= videos[i].duration %>
-                    </td>
-                  </tr>
-                  <% } %>
+                <tbody>
+                  <% for(var i=0; i < videos.length; i++) { %>
+                    <tr>
+                      <td>
+                        <%= videos[i].id %>
+                      </td>
+                      <td>
+                        <a href="<%= videos[i].url %>" target="_blank">
+                          <%= videos[i].url %>
+                        </a>
 
-              </tbody>
-              <% } %>
-              
+                      </td>
+                      <td>
+                        <%= videos[i].name %>
+                      </td>
+                      <td>
+                        <%= videos[i].source %>
+                      </td>
+                      <td>
+                        <%= videos[i].duration %>
+                      </td>
+                    </tr>
+                    <% } %>
+
+                </tbody>
+                <% } %>
+
             </table>
           </div>
+
+
+
+          <div id="channel" class="tab-pane fade">
+            <div class="d-flex py-2 flex-row justify-content-between">
+              <h3>Categories Table</h3>
+              <a class="btn btn-primary" href="/admin/add-category" role="button"><i class="fa fa-plus mr-2"
+                  aria-hidden="true"></i>Add New Category</a>
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">uuid</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Is Private</th>
+                </tr>
+              </thead>
+              <% if (category) { %>
+                <tbody>
+                  <% for(var i=0; i < category.length; i++) { %>
+                    <tr>
+                      <td>
+                        <%= category[i].id %>
+                      </td>
+                      <td>
+                        <%= category[i].name %>
+                      </td>
+
+                    </tr>
+                    <% } %>
+
+                </tbody>
+                <% } %>
+
+            </table>
+          </div>
+
 
         </div>
 

@@ -51,4 +51,38 @@ const add_video_model = {
 }
 
 
-module.exports = {add_video_model,add_user_model}
+const add_video_channel = {
+    title: "Add Channel",
+    action: "/admin/add-channel",
+    inputs: [{
+        title: "URL",
+        name: "url",
+        type: "text"
+    }
+    ]
+}
+
+
+const add_video_category = {
+    title: "Add Category",
+    action: "/admin/add-category",
+    inputs: [{
+        title: "Title",
+        name: "title",
+        type: "text"
+    },
+    {
+        title: "Is Private",
+        name: "is_private",
+        type: "checkbox"
+    },
+    {
+        title: "User ID",
+        name: "user_id",
+        type: "integer"
+    }
+    ]
+}
+
+
+module.exports = {add_video_model,add_user_model,add_video_category,add_video_channel}
