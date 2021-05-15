@@ -20,8 +20,12 @@
         <ul class="nav nav-tabs " role="tablist">
           <li class="nav-link"><a data-toggle="tab" href="#user">Users</a></li>
           <li class="nav-link"><a data-toggle="tab" href="#video">Videos</a></li>
-          <li class="nav-link"><a data-toggle="tab" href="#channel">Channels</a></li>
+          <li class="nav-link"><a data-toggle="tab" href="#user-video">User Videos</a></li>
           <li class="nav-link"><a data-toggle="tab" href="#category">Categories</a></li>
+          <li class="nav-link"><a data-toggle="tab" href="#channel">Channels</a></li>
+          <li class="nav-link"><a data-toggle="tab" href="#category-has-video">Category Has Video</a></li>
+          <li class="nav-link"><a data-toggle="tab" href="#user_follows_channel">User Follows Channel</a></li>
+          <li class="nav-link"><a data-toggle="tab" href="#category_has_channel">Category Has Channel</a></li>
 
         </ul>
 
@@ -34,7 +38,35 @@
               <a class="btn btn-primary" href="/admin/add-user" role="button"><i class="fa fa-plus mr-2"
                   aria-hidden="true"></i>Add New User</a>
             </div>
-            <table class="table table-striped">
+
+
+            <form action="">
+
+              <% for(k=0; k < form_models.user_form_model.inputs.length; k++) { %>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">
+                    <%= form_models.user_form_model.inputs[k].title %>
+                  </label>
+                  <input type="<%= form_models.user_form_model.inputs[k].type %>" class="form-control"
+                    name="<%= form_models.user_form_model.inputs[k].name %>"
+                    id="<%= form_models.user_form_model.table_name %>_<%= form_models.user_form_model.inputs[k].name %>">
+                  </div>
+              <% } %>
+
+                  <button type="button" class="btn btn-primary" onclick='filter("#user_search","id,email,name,surname,password,username")'><i class="fa fa-search mr-2"
+                      aria-hidden="true"></i> <%= form_models.user_form_model.title %> </button>
+                  <button type="button" class="btn btn-warning"
+                    onclick='search("<%= form_models.user_form_model.table_name %>", "name,surname,email,username")'><i
+                      class="fa fa-gear mr-2"></i> Generate SQL </button>
+                  <div>
+                    <code id="user_search"
+                      style="background-color: grey; color: white; font-size: medium;">select * from <%= form_models.user_form_model.table_name %></code>
+                  </div>
+               
+            </form>
+
+
+            <table class="table table-striped my-2">
 
               <thead>
                 <tr>
@@ -74,6 +106,10 @@
                 </tbody>
                 <% } %>
             </table>
+
+
+
+
           </div>
 
           <div id="video" class="tab-pane fade">
@@ -82,6 +118,33 @@
               <a class="btn btn-primary" href="/admin/add-video" role="button"><i class="fa fa-plus mr-2"
                   aria-hidden="true"></i>Add New Video</a>
             </div>
+
+            <form action="">
+
+              <% for(k=0; k < form_models.find_video_model.inputs.length; k++) { %>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">
+                    <%= form_models.find_video_model.inputs[k].title %>
+                  </label>
+                  <input type="<%= form_models.find_video_model.inputs[k].type %>" class="form-control"
+                    name="<%= form_models.find_video_model.inputs[k].name %>"
+                    id="<%= form_models.find_video_model.table_name %>_<%= form_models.find_video_model.inputs[k].name %>">
+                  </div>
+              <% } %>
+
+                  <button type="button" class="btn btn-primary" onclick='filter("#video_search","id,url,name,source,duration")'><i class="fa fa-search mr-2"
+                      aria-hidden="true"></i> <%= form_models.find_video_model.title %> </button>
+                  <button type="button" class="btn btn-warning"
+                    onclick='search("<%= form_models.find_video_model.table_name %>", "url,name,source,duration")'><i
+                      class="fa fa-gear mr-2"></i> Generate SQL </button>
+                  <div>
+                    <code id="video_search"
+                      style="background-color: grey; color: white; font-size: medium;">select * from <%= form_models.find_video_model.table_name %></code>
+                  </div>
+               
+            </form>
+
+
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -90,6 +153,7 @@
                   <th scope="col">Name</th>
                   <th scope="col">Source</th>
                   <th scope="col">Duration</th>
+                  <th></th>
                 </tr>
               </thead>
               <% if (videos) { %>
@@ -114,6 +178,9 @@
                       <td>
                         <%= videos[i].duration %>
                       </td>
+                      <td>
+                        <a class="btn btn-danger" href="/admin/delete/video/<%= videos[i].id %>">Delete</a>
+                      </td>
                     </tr>
                     <% } %>
 
@@ -123,9 +190,49 @@
             </table>
           </div>
 
+          <div id="user-video" class="tab-pane fade">
+            <div class="d-flex py-2 flex-row justify-content-between">
+              <h3>User Videos</h3>
+              <a class="btn btn-primary" href="/admin/add-user-video" role="button"><i class="fa fa-plus mr-2"
+                  aria-hidden="true"></i>Add New User Video</a>
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">User Id</th>
+                  <th scope="col">Video Id</th>
+                  <th scope="col">Notes</th>
+                  <th scope="col">Rating</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <% if (user_videos) { %>
+                <tbody>
+                  <% for(var i=0; i < user_videos.length; i++) { %>
+                    <tr>
+                      <td>
+                        <%= user_videos[i].user_id %>
+                      </td>
+                      <td>
+                        <%= user_videos[i].video_id %>
+                      </td>
+                      <td>
+                        <%= user_videos[i].notes %>
+                      </td>
+                      <td>
+                        <%= user_videos[i].rating %>
+                      </td>
 
+                    </tr>
+                    <% } %>
 
-          <div id="channel" class="tab-pane fade">
+                </tbody>
+                <% } %>
+
+            </table>
+          </div>
+          
+          <div id="category" class="tab-pane fade">
             <div class="d-flex py-2 flex-row justify-content-between">
               <h3>Categories Table</h3>
               <a class="btn btn-primary" href="/admin/add-category" role="button"><i class="fa fa-plus mr-2"
@@ -136,6 +243,7 @@
                 <tr>
                   <th scope="col">uuid</th>
                   <th scope="col">Name</th>
+                  <th scope="col">User ID</th>
                   <th scope="col">Is Private</th>
                 </tr>
               </thead>
@@ -144,12 +252,17 @@
                   <% for(var i=0; i < category.length; i++) { %>
                     <tr>
                       <td>
-                        <%= category[i].id %>
+                        <%= category[i].uuid %>
                       </td>
                       <td>
-                        <%= category[i].name %>
+                        <%= category[i].title %>
                       </td>
-
+                      <td>
+                        <%= category[i].user_id %>
+                      </td>
+                      <td>
+                        <%= category[i].is_private %>
+                      </td>
                     </tr>
                     <% } %>
 
@@ -159,11 +272,195 @@
             </table>
           </div>
 
+          <div id="channel" class="tab-pane fade">
+            <div class="d-flex py-2 flex-row justify-content-between">
+              <h3>Channel Table</h3>
+              <a class="btn btn-primary" href="/admin/add-channel" role="button"><i class="fa fa-plus mr-2"
+                  aria-hidden="true"></i>Add New Channel</a>
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">id</th>
+                  <th scope="col">url</th>
+                </tr>
+              </thead>
+              <% if (channel) { %>
+                <tbody>
+                  <% for(var i=0; i < channel.length; i++) { %>
+                    <tr>
+                      <td>
+                        <%= channel[i].id %>
+                      </td>
+                      <td>
+                        <%= channel[i].url %>
+                      </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+              <% } %>
+
+            </table>
+          </div>
+
+          <div id="category-has-video" class="tab-pane fade">
+            <div class="d-flex py-2 flex-row justify-content-between">
+              <h3>Channel Has Categories Table</h3>
+              <a class="btn btn-primary" href="/admin/add-category" role="button"><i class="fa fa-plus mr-2"
+                  aria-hidden="true"></i>Add New Category</a>
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Category Id</th>
+                  <th scope="col">Ca</th>
+                </tr>
+              </thead>
+              <% if (category) { %>
+                <tbody>
+                  <% for(var i=0; i < category.length; i++) { %>
+                    <tr>
+                      <td>
+                        <%= category[i].uuid %>
+                      </td>
+                      <td>
+                        <%= category[i].title %>
+                      </td>
+                      <td>
+                        <%= category[i].user_id %>
+                      </td>
+                      <td>
+                        <%= category[i].is_private %>
+                      </td>
+                    </tr>
+                    <% } %>
+
+                </tbody>
+                <% } %>
+
+            </table>
+          </div>
 
         </div>
 
       </div>
+
+      <div class="modal bd-example-modal-lg  fade " id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+
+            <div class="modal-body">
+              <div id="table_s"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
     </div>
+
+
+    <script>
+      // function handleQuery(x){
+      //   console.log(x);
+      // }
+      function handleQuery(x, y, label_name) {
+        console.log(label_name);
+        $(`#${label_name}`).append(` ${x} = ${y}`);
+      }
+
+      function search(table_name, columns) {
+
+        let k = columns.split(',');
+        let query = `SELECT * FROM ${table_name}`
+        let flag = false;
+        k.forEach((element, index) => {
+
+          let col_val = $(`#${table_name}_${element}`).val()
+          if (col_val != "") {
+            if (!flag) {
+              query += " WHERE "
+            }
+            flag = true;
+            query += element + "=\"" + col_val + "\""
+            if (index != k.length - 1) {
+              query += " AND "
+            }
+          }
+        });
+
+        console.log(query.substr(query.length-4));
+        if(query.substr(query.length-4) === "AND "){
+          query = query.substr(0,query.length-4);
+        }
+
+        $(`#${table_name}_search`).text(query);
+      }
+
+
+      function filter(query_string, column_names) {
+        c_names = column_names.split(',');
+        $.ajax({
+          url: "/admin/search",
+          type: "get", //send it through get method
+          data: {
+            query: $(query_string).text(),
+          },
+          success: function (response) {
+            console.log(response[0]);
+
+            table_columns_html = ""
+            c_names.forEach(element => {
+              table_columns_html += `<th scope="col">${element}`
+            });
+
+            response = response[0];
+            table_rows_html = "";
+            response.forEach((element, index) => {
+              let arr = Object.keys(element)
+              let row_html = "<tr> ";
+
+              arr.forEach(ww => {
+                console.log(element[ww])
+                row_html += `<td> ${element[ww]} </td>`
+              });
+
+              row_html += "</tr>"
+              table_rows_html += row_html;
+            });
+
+            let table_html =
+              `
+            <table class="table table-striped">
+              <thead>
+               ${table_columns_html}
+              </thead>
+                <tbody>
+                  ${table_rows_html}
+                </tbody>
+            </table>
+            `
+
+            console.log(table_html);
+
+            $('#exampleModalLong').modal('show');
+
+
+            $("#table_s").html(table_html);
+
+
+
+          },
+          error: function (xhr) {
+
+          }
+        });
+      }
+
+    </script>
+
 </body>
 
 </html>

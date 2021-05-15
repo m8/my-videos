@@ -1,0 +1,13 @@
+<form action="<%= form.action %>" method="POST">
+                
+    <% for(k = 0; k < form.inputs.length; k++) { %>
+    <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label"><%= form.inputs[k].title %></label>
+    <input type="<%= form.inputs[k].type %>" class="form-control" name="<%= form.inputs[k].name %>" id="exampleInputEmail1" </div>
+    <% } %>
+
+    <button type="submit" class="btn btn-primary"><i class="fa fa-plus mr-2" aria-hidden="true"></i><%= form.title %></button>
+</form>
+
+
+

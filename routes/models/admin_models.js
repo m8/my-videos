@@ -84,5 +84,48 @@ const add_video_category = {
     ]
 }
 
+const add_category_has_video = {
+    title: "Add Category",
+    action: "/admin/add-category-has-video",
+    inputs: [{
+        title: "Video Id",
+        name: "video_id",
+        type: "integer"
+    },
+    {
+        title: "Category Id",
+        name: "category_id",
+        type: "integer"
+    }
+    ]
+}
 
-module.exports = {add_video_model,add_user_model,add_video_category,add_video_channel}
+const user_video_model = {
+    title: "Add User Video",
+    action: "/admin/add-user-video",
+    inputs: [{
+        title: "User Id",
+        name: "user_id",
+        type: "integer"
+    },
+    {
+        title: "Video Id",
+        name: "video_id",
+        type: "integer"
+    },
+    {
+        title: "Notes",
+        name: "notes",
+        type: "text"
+    },
+    {
+        title: "Rating",
+        name: "rating",
+        type: "integer"
+    }
+    ]
+}
+
+
+
+module.exports = {add_video_model,add_user_model,add_video_category,add_video_channel,user_video_model,add_category_has_video}
