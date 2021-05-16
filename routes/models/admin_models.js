@@ -58,6 +58,11 @@ const add_video_channel = {
         title: "URL",
         name: "url",
         type: "text"
+    },
+    {
+        title: "Name",
+        name: "name",
+        type: "text"
     }
     ]
 }
@@ -93,9 +98,9 @@ const add_category_has_video = {
         type: "integer"
     },
     {
-        title: "Category Id",
-        name: "category_id",
-        type: "integer"
+        title: "Category UUID",
+        name: "category_uuid",
+        type: "text"
     }
     ]
 }

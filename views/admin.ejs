@@ -282,6 +282,7 @@
               <thead>
                 <tr>
                   <th scope="col">id</th>
+                  <th scope="col">name</th>
                   <th scope="col">url</th>
                 </tr>
               </thead>
@@ -293,8 +294,13 @@
                         <%= channel[i].id %>
                       </td>
                       <td>
-                        <%= channel[i].url %>
+                        <%= channel[i].name %>
                       </td>
+                      <td>
+                        <a href="<%= channel[i].url %>">                        <%= channel[i].url %>
+                        </a>
+                      </td>
+                      
                     </tr>
                     <% } %>
                 </tbody>
@@ -305,32 +311,26 @@
 
           <div id="category-has-video" class="tab-pane fade">
             <div class="d-flex py-2 flex-row justify-content-between">
-              <h3>Channel Has Categories Table</h3>
-              <a class="btn btn-primary" href="/admin/add-category" role="button"><i class="fa fa-plus mr-2"
-                  aria-hidden="true"></i>Add New Category</a>
+              <h3>Category Has Video Table</h3>
+              <a class="btn btn-primary" href="/admin/add-category-has-video" role="button"><i class="fa fa-plus mr-2"
+                  aria-hidden="true"></i>Add New Category Has Video</a>
             </div>
             <table class="table table-striped">
               <thead>
                 <tr>
                   <th scope="col">Category Id</th>
-                  <th scope="col">Ca</th>
+                  <th scope="col">Video ID</th>
                 </tr>
               </thead>
-              <% if (category) { %>
+              <% if (category_has_video) { %>
                 <tbody>
-                  <% for(var i=0; i < category.length; i++) { %>
+                  <% for(var i=0; i < category_has_video.length; i++) { %>
                     <tr>
                       <td>
-                        <%= category[i].uuid %>
+                        <%= category_has_video[i].category_uuid %>
                       </td>
                       <td>
-                        <%= category[i].title %>
-                      </td>
-                      <td>
-                        <%= category[i].user_id %>
-                      </td>
-                      <td>
-                        <%= category[i].is_private %>
+                        <%= category_has_video[i].video_id %>
                       </td>
                     </tr>
                     <% } %>
