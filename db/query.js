@@ -74,6 +74,7 @@ const create_category_has_video = `CREATE TABLE IF NOT EXISTS category_has_video
 const create_channel = `CREATE TABLE IF NOT EXISTS channel (
     id INT NOT NULL AUTO_INCREMENT,
     url VARCHAR(255) NOT NULL,
+    name VARCHAR(60),
     PRIMARY KEY (id)
   );`
 
