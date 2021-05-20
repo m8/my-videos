@@ -24,8 +24,8 @@
           <li class="nav-link"><a data-toggle="tab" href="#category">Categories</a></li>
           <li class="nav-link"><a data-toggle="tab" href="#channel">Channels</a></li>
           <li class="nav-link"><a data-toggle="tab" href="#category-has-video">Category Has Video</a></li>
-          <li class="nav-link"><a data-toggle="tab" href="#user_follows_channel">User Follows Channel</a></li>
-          <li class="nav-link"><a data-toggle="tab" href="#category_has_channel">Category Has Channel</a></li>
+          <li class="nav-link"><a data-toggle="tab" href="#user-follows-channel">User Follows Channel</a></li>
+          <li class="nav-link"><a data-toggle="tab" href="#category-has-channel">Category Has Channel</a></li>
 
         </ul>
 
@@ -334,6 +334,70 @@
                       </td>
                     </tr>
                     <% } %>
+
+                </tbody>
+                <% } %>
+
+            </table>
+          </div>
+
+          <div id="user-follows-channel" class="tab-pane fade">
+            <div class="d-flex py-2 flex-row justify-content-between">
+              <h3>User Follows Channel Table</h3>
+              <a class="btn btn-primary" href="/admin/add-category-has-video" role="button"><i class="fa fa-plus mr-2"
+                  aria-hidden="true"></i>User Follows Channel</a>
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">User ID</th>
+                  <th scope="col">Channel ID</th>
+                  <th scope="col">Since</th>
+                </tr>
+              </thead>
+              <% if (category_has_video) { %>
+                <tbody>
+                    <tr>
+                      <td>
+                        7
+                      </td>
+                      <td>
+                        1
+                      </td>
+                      <td>
+                        2021
+                      </td>
+                    </tr>
+
+                </tbody>
+                <% } %>
+
+            </table>
+          </div>
+
+          <div id="category-has-channel" class="tab-pane fade">
+            <div class="d-flex py-2 flex-row justify-content-between">
+              <h3>Category Has Channel Table</h3>
+              <a class="btn btn-primary" href="/admin/add-category-has-channel" role="button"><i class="fa fa-plus mr-2"
+                  aria-hidden="true"></i>Add New Category Has Channel</a>
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Category UUID</th>
+                  <th scope="col">Channel ID</th>
+                </tr>
+              </thead>
+              <% if (category_has_video) { %>
+                <tbody>
+                    <tr>
+                      <td>
+                        1b529ec0-36ee-4d7d-ae61-cf417317f981 
+                      </td>
+                      <td>
+                          3
+                      </td>
+                    </tr>
 
                 </tbody>
                 <% } %>

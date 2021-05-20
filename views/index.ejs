@@ -15,7 +15,7 @@
         <h3>Welcome to My Videos <i class="fa fa-camera"></i></h3>
         <hr>
         Hello, <%= name %> Your recent videos:
-
+        <button id="add" class="btn btn-info"><i class="fa fa-plus"></i>Add Video</button>
         <table class="table table-striped my-4">
 
           <thead>
@@ -40,7 +40,7 @@
                   <%= videos[i].rating %>
                 </td>
                 <td>
-                  <a href="" class="btn btn-success"><i class="fa fa-submit">Details</i></a>
+                  <a href="/details/<%= videos[i].id %>" class="btn btn-success"><i class="fa fa-submit">Details</i></a>
                 </td>
               </tr>
               <% } %>
@@ -51,6 +51,33 @@
         
       </div>
     </div>
+    </body>
+
+    <div class="modal bd-example-modal-lg  fade " id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+
+            <div class="modal-body">
+              <form method="POST" action="/add-video">
+                <label for="exampleInputEmail1" class="form-label">Video Name</label>
+                <input type="text" class="form-control" name="video_name" id="exampleInputEmail1">
+                <label for="exampleInputEmail1" class="form-label">Video URL</label>
+                <input type="text" class="form-control" name="video_url" id="exampleInputEmail1">
+                <button type="submit" class="btn btn-success mt-2">Add Video</button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    <script>
     
-  </body>
+    $('#add').on('click',function(){
+      $('#modal').modal('show');
+    })
+
+
+    </script>
 </html>
