@@ -20,6 +20,7 @@
 
           <thead>
             <tr>
+              <th scope="col">Name</th>
               <th scope="col">URL</th>
               <th scope="col">Since</th>
             </tr>
@@ -29,6 +30,10 @@
           <tbody>
             <% for(var i=0; i < channels.length; i++) { %>
               <tr>
+                
+                <td>
+                  <%= channels[i].name %>
+                </td>
                 
                 <td>
                   <a href="<%= channels[i].url %>"><%= channels[i].url %></a> 
@@ -55,8 +60,12 @@
 
             <div class="modal-body">
               <form method="POST" action="/add-channel">
+                <label for="exampleInputEmail1" class="form-label">Name</label>
+                <input type="text" class="form-control" name="name" id="exampleInputEmail1">
+
                 <label for="exampleInputEmail1" class="form-label">Channel Url</label>
                 <input type="text" class="form-control" name="channel_url" id="exampleInputEmail1">
+                
                 <button type="submit" class="btn btn-success mt-2">Follow Channel</button>
               </form>
             </div>

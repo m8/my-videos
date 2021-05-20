@@ -65,7 +65,7 @@ router.post('/add-video', async function (req, res, next) {
 router.post('/add-channel', async function (req, res, next) {
     if (req.session.user) {
 
-        let { channel_url } = req.body;
+        let { channel_url, name} = req.body;
         console.log("Channel_url", channel_url)
         const connection = await connectionPool.getConnection();
 
@@ -75,8 +75,8 @@ router.post('/add-channel', async function (req, res, next) {
 
 
         if (channels.length == 0) {
-            const query3 = "INSERT INTO channel (url) VALUES(?)"
-            const [rows] = await connection.execute(query3, [channel_url])
+            const query3 = "INSERT INTO channel (url,name) VALUES(?,?)"
+            const [rows] = await connection.execute(query3, [channel_url,name])
 
             console.log("Inseted into channel")
 
