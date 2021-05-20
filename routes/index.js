@@ -26,12 +26,12 @@ router.post('/add-video', async function(req, res, next) {
     const query = "SELECT * FROM video where url=?";
     const [videos] = await connection.execute(query, [video_url]);
 
-    if(video_url == null){
+    if(videos.length == 0){
       const query = "INSERT INTO video (url,name,source) VALUES(?,?,?)"
-      const [rows] = await connection.execute(query, [video_url,video_name,5])
+      const [rows] = await connection.execute(query, [video_url,video_name,"youtube"])
 
       const query2 = "INSERT INTO user_has_video (user_id,video_id,notes,rating) VALUES(?,?,?,?)"
-      const [rows2] = await connection.execute(query2, [req.session.user.id, rows.inserted_id, "",5])
+      const [rows2] = await connection.execute(query2, [req.session.user.id, rows.insertedId, "",5])
     }
     else{
       const query3 = "INSERT INTO user_has_video (user_id,video_id,notes,rating) VALUES(?,?,?,?)"
