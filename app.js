@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var videoRouter = require('./routes/add_video');
 var adminRouter = require('./routes/admin');
+var channelRouter = require('./routes/channel')
 
 
 var app = express();
@@ -42,6 +43,7 @@ app.use('/', indexRouter);
 app.use('/', videoRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
+app.use('/channel', channelRouter);
 
 
 // catch 404 and forward to error handler
