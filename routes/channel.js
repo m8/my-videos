@@ -3,14 +3,19 @@ var channelRouter = express.Router();
 const ytch = require('yt-channel-info')
 
 channelRouter.get('/:id', async (req, res, next) => {
-    const channelId = req.params.id;
-    console.log("channelId", channelId)
+    const { id } = req.params;
+    console.log("channelId", id)
 
-    ytch.getChannelInfo(channelId, 0).then((response) => {
-        console.log(response)
-    }).catch((err) => {
-        console.log(err)
-    })
+    /* let response = null */
+    const response = await ytch.getChannelInfo(id, 0)
+    console.log(response)
+    res.render('channel', { source: response })
+
+    /* try {
+        console.log("response", response)
+    } catch (exception) {
+        console.log(exception)
+    } */
 
 })
 
