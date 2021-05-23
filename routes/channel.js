@@ -3,9 +3,9 @@ var channelRouter = express.Router();
 const ytch = require('yt-channel-info')
 
 channelRouter.get('/:id', async (req, res, next) => {
-    const channelId = req.params.id;
-    console.log("channelId", channelId)
-
+    const { id } = req.params;
+    console.log("channelId", id)
+    channelId = id;
     ytch.getChannelInfo(channelId, 0).then((response) => {
 
         ytch.getChannelVideos(channelId, 'newest', String).then((response2) => {

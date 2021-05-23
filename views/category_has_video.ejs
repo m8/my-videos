@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include templates/head.ejs %>
+  
+  </head>
+
+  <body>
+    <% include templates/navbar.ejs %>
+
+    <div class="content-container">
+
+      <div class="container-fluid">
+
+        <h3>Category Page <i class="fa fa-video"></i></h3>
+        <hr>
+        <table class="table table-striped my-4">
+
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">URL</th>
+            </tr>
+
+          </thead>
+          <% if (videos) { %>
+          <tbody>
+            <% for(var i=0; i < videos.length; i++) { %>
+              <tr>
+                
+                <td>
+                  <%= videos[i].name %>
+                </td>
+                
+                <td>
+                  <a href="<%= videos[i].url %>"><%= videos[i].url %></a> 
+                </td>
+
+              </tr>
+              <% } %>
+
+          </tbody>
+          <% } %>
+        </table>
+        
+      </div>
+    </div>
+    </body>
+
+
+    </script>
+</html>

@@ -61,6 +61,14 @@
                                         <%= videos[k].title %>
                                     </p>
                                 </div>
+                                <div class="card-footer">
+                                    <form action="/add-video" method="POST">
+                                        <input name="video_url" hidden value='https://www.youtube.com/watch?v=<%= videos[k].videoId %>' >
+                                        <input name="video_name" hidden value='<%= videos[k].title %>' >
+                                        
+                                        <button class="btn btn-success"><i class="fa fa-save"></i> Save Video</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
 

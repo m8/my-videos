@@ -39,6 +39,7 @@ const create_category = `CREATE TABLE IF NOT EXISTS category (
 const create_user_has_video = `CREATE TABLE IF NOT EXISTS user_has_video (
     user_id INT NOT NULL,
     video_id INT NOT NULL,
+    title TEXT(500) NULL,
     notes TEXT(1000) NULL,
     rating INT NULL,
   
