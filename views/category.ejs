@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include templates/head.ejs %>
+  
+  </head>
+
+  <body>
+    <% include templates/navbar.ejs %>
+
+    <div class="content-container">
+
+      <div class="container-fluid">
+
+        <h3>Welcome to Categories Page. <i class="fa fa-book"></i></h3>
+        <hr>
+        Hello, <%= name %> The categories you have
+        <button id="add" class="btn btn-info"><i class="fa fa-plus"></i>Add Category</button>
+        <table class="table table-striped my-4">
+
+          <thead>
+            <tr>
+              <th scope="col">UUID</th>
+              <th scope="col">Title</th>
+              <th scope="col">Is_private</th>
+              <th scope="col">User_id</th>
+            </tr>
+
+          </thead>
+          <% if (categories) { %>
+          <tbody>
+            <% for(var i=0; i < categories.length; i++) { %>
+              <tr>
+                
+                <td>
+                  <%= categories[i].uuid %>
+                </td>
+                
+                <td>
+                    <%= categories[i].title %>
+                </td>
+
+                <td>
+                    <%= categories[i].is_private %>
+                </td>
+                <td>
+                    <%= categories[i].user_id %>
+                </td>
+              </tr>
+              <% } %>
+
+          </tbody>
+          <% } %>
+        </table>
+        
+      </div>
+    </div>
+    </body>
+
+    <div class="modal bd-example-modal-lg  fade " id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+
+            <div class="modal-body">
+              <form method="POST" action="/category/add">
+                <label for="exampleInputEmail1" class="form-label">Title</label>
+                <input type="text" class="form-control" name="title" id="exampleInputEmail1">
+
+                <label for="exampleInputEmail1" class="form-label">is_private?</label>
+                <input type="checkbox" class="form-control" name="is_private" id="exampleInputEmail1">
+                
+                <button type="submit" class="btn btn-success mt-2">Add Category</button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    <script>
+    
+    $('#add').on('click',function(){
+      $('#modal').modal('show');
+    })
+
+
+    </script>
+</html>
