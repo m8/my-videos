@@ -100,7 +100,7 @@ router.post('/add-channel', async function (req, res, next) {
 });
 
 router.get('/login', async function (req, res, next) {
-    res.render('login', { videos: null });
+    res.render('login');
 });
 
 router.get('/details/:id', async function (req, res, next) {
