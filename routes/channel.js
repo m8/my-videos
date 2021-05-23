@@ -5,18 +5,21 @@ const ytch = require('yt-channel-info')
 channelRouter.get('/:id', async (req, res, next) => {
     const { id } = req.params;
     console.log("channelId", id)
+    channelId = id;
+    ytch.getChannelInfo(channelId, 0).then((response) => {
 
-    /* let response = null */
-    const response = await ytch.getChannelInfo(id, 0)
-    console.log(response)
-    res.render('channel', { source: response })
-
-    /* try {
-        console.log("response", response)
-    } catch (exception) {
-        console.log(exception)
-    } */
-
+        ytch.getChannelVideos(channelId, 'newest', String).then((response2) => {
+            // console.log(response)
+            console.log(response2)
+            res.render('channel',{source: response, videos: response2.items})
+          }).catch((err) => {
+            console.log(err)
+          })
+      
+    }).catch((err) => {
+        console.log(err)
+    })
+    
 })
 
 module.exports = channelRouter;
