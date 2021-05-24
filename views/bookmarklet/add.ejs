@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../templates/head.ejs %>
+  <style>
+   
+  </style>
+</head>
+
+<body>
+    <div class="container mt-2" >
+        <form method="POST" action="/bookmarklet/add-video">
+            <label for="exampleInputEmail1" class="form-label">Video Name</label>
+            <input type="text" class="form-control" name="video_name" id="exampleInputEmail1" value="<%= name %>">
+            <label for="exampleInputEmail1" class="form-label">Video URL</label>
+            <input type="text" class="form-control" name="video_url" id="exampleInputEmail1" value="<%= url %>">
+            <label for="exampleInputEmail1" class="form-label">Category</label>
+            <select class="form-control" name="uuid">
+              <option> </option>
+              <% for(var i=0; i < categories.length; i++) { %>
+                <option value="<%= categories[i].uuid %>">
+                  <%= categories[i].title %>
+                </option>
+                <% }%>
+            </select>
+            <button type="submit" class="btn btn-success mt-2">Add Video</button>
+          </form>
+
+    </div>
+</body>
+<script>
+
+</script>
+
+
+</html>
