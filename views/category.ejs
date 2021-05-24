@@ -19,46 +19,26 @@
           Hello, <%= name %> The categories you have  
           <button id="add" class="btn btn-info"><i class="fa fa-plus"></i>Add Category</button>
         </div>
-        <table class="table table-striped my-4">
-
-          <thead>
-            <tr>
-              <th scope="col">Title</th>
-              <th scope="col">UUID</th>
-              <th scope="col">Is_private</th>
-              <th scope="col">User_id</th>
-            </tr>
-
-          </thead>
+        <div class="pt-2">
           <% if (categories) { %>
-          <tbody>
             <% for(var i=0; i < categories.length; i++) { %>
-              <tr>
-                
-                   
-                <td>
-                  <a href="/category/<%= categories[i].uuid %>"><%= categories[i].title %></a>
-                  
-                </td>
+          <div class="card mb-2">
+            <div class="card-body">
 
-                <td>
-                  <%= categories[i].uuid %>
-                </td>
-             
-
-                <td>
-                    <%= categories[i].is_private %>
-                </td>
-                <td>
-                    <%= categories[i].user_id %>
-                </td>
-              </tr>
-              <% } %>
-
-          </tbody>
+              <h5 class="card-title"><a href="/category/<%= categories[i].uuid %>"><%= categories[i].title %></a></h5>
+              <p class="card-text">
+                <% if(categories[i].is_private) { %>
+                  🔒 Private category.
+                <% } else { %>
+                  📢 Public category. To share with your friends: <%= categories[i].uuid %>
+                <% } %>
+              </p>
+              <a href="/category/details/<%= categories[i].uuid %>" class="btn btn-success">Details</a>
+            </div>
+          </div>
           <% } %>
-        </table>
-        
+          <% } %>
+       </div>
       </div>
     </div>
     </body>

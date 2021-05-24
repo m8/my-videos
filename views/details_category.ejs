@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include templates/head.ejs %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <style>
+
+    .form-control{
+        margin-bottom : 15px;
+    }
+
+    .embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    </style>
+</head>
+
+<body>
+
+    <% include templates/navbar.ejs %>
+        <div class="content-container">
+            <div class="container-fluid">
+                <h2 class="text-info"><%= category.title %>
+                </h2>
+
+                <div class="row">
+
+                    <div class="col">
+                        <form method="POST">
+
+                            <label for="exampleInputEmail1" class="form-label">Title</label>
+                            <input type="text" class="form-control" name="category_title" value="<%= category.title %>" id="exampleInputEmail1"> 
+        
+                            <label for="exampleInputEmail1" class="form-label">UUID</label>
+                            <input type="text" disabled class="form-control" name="category_uuid" value="<%= category.uuid %>" id="exampleInputEmail1">
+        
+                            <label for="exampleInputEmail1" class="form-label">is_private</label>
+                            <input type="number" class="form-control" name="category_is_private" value="<%= category.is_private %>" id="exampleInputEmail1">
+        
+        
+                            <button type="submit" class="btn btn-warning"><i class="fa fa-save mr-2" aria-hidden="true"></i>
+                                Update Category
+                            </button>
+        
+                            <a href="/category/delete/<%= category.uuid %>" class="btn btn-danger"><i class="fa fa-trash mr-2" aria-hidden="true"></i> 
+                                Delete Category
+                            </a>
+        
+                        </form>
+                    </div>
+                </div>
+
+
+
+               
+            </div>
+        </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script>
+var simplemde = new SimpleMDE({ element: document.getElementById("texts") });
+
+</script>
+
+</html>
