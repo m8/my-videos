@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var session = require('express-session');
+var session = require('cookie-session');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -11,6 +11,8 @@ var videoRouter = require('./routes/add_video');
 var adminRouter = require('./routes/admin');
 var channelRouter = require('./routes/channel')
 var categoryRouter = require('./routes/category')
+var bookmarkletRouter = require('./routes/bookmarklet')
+
 
 var app = express();
 
@@ -34,7 +36,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 600000
+        expires: 12000000
     }
 }));
 
@@ -45,6 +47,8 @@ app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
 app.use('/channel', channelRouter);
 app.use('/category',categoryRouter);
+app.use('/bookmarklet',bookmarkletRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
