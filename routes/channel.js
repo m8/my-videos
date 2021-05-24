@@ -1,9 +1,12 @@
-var express = require('express');
-var channelRouter = express.Router();
-const ytch = require('yt-channel-info')
+let express = require('express');
+let channelRouter = express.Router();
+let connectionPool = require('../db/conn');
+let ytch = require('yt-channel-info')
 
 channelRouter.get('/:id', async (req, res, next) => {
   if(req.session.user){
+    
+    const connection = await connectionPool.getConnection();
 
     const { id } = req.params;
     channelId = id;
