@@ -9,6 +9,8 @@
     .form-control{
         margin-bottom : 15px;
     }
+
+    .embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
     </style>
 </head>
 
@@ -17,32 +19,46 @@
     <% include templates/navbar.ejs %>
         <div class="content-container">
             <div class="container-fluid">
-                <h2 class="text-info">My Notes
+                <h2 class="text-info"><%= vs.name %>
                 </h2>
-                <form method="POST">
 
-                    <label for="exampleInputEmail1" class="form-label">Name</label>
-                    <input type="text" class="form-control" name="video_name" value="<%= vs.name %>" id="exampleInputEmail1"> 
+                <div class="row">
 
-                    <label for="exampleInputEmail1" class="form-label">URL</label>
-                    <a type="text" disabled class="form-control" name="video_url" href="<%= vs.url %>" id="exampleInputEmail1"><%= vs.url %></a>
+                    <div class="col">
+                        <div class='embed-container'><iframe src='https://www.youtube.com/embed/<%= vs.url.split('?v=')[1]%>' frameborder='0' allowfullscreen></iframe></div>
+                    </div>
 
-                    <label for="exampleInputEmail1" class="form-label">Point</label>
-                    <input type="number" class="form-control" name="rating" value="<%= video.rating %>" id="exampleInputEmail1">
+                    <div class="col">
+                        <form method="POST">
 
-                    <label for="exampleInputEmail1" class="form-label">Notes</label>
-                    <textarea name="notes" id="texts" cols="30" rows="10"><%= video.notes %></textarea>
+                            <label for="exampleInputEmail1" class="form-label">Name</label>
+                            <input type="text" class="form-control" name="video_name" value="<%= vs.name %>" id="exampleInputEmail1"> 
+        
+                            <label for="exampleInputEmail1" class="form-label">URL</label>
+                            <a type="text" disabled class="form-control" name="video_url" href="<%= vs.url %>" id="exampleInputEmail1"><%= vs.url %></a>
+        
+                            <label for="exampleInputEmail1" class="form-label">Point</label>
+                            <input type="number" class="form-control" name="rating" value="<%= video.rating %>" id="exampleInputEmail1">
+        
+                            <label for="exampleInputEmail1" class="form-label">Notes</label>
+                            <textarea name="notes" id="texts" cols="30" rows="10"><%= video.notes %></textarea>
+        
+        
+                            <button type="submit" class="btn btn-warning"><i class="fa fa-save mr-2" aria-hidden="true"></i>
+                                Update Video
+                            </button>
+        
+                            <a type="submit" class="btn btn-danger" href="/delete-video/<%= vs.id %>"><i class="fa fa-trash mr-2" aria-hidden="true"></i>
+                                Delete Video
+                            </a>
+        
+                        </form>
+                    </div>
+                </div>
 
 
-                    <button type="submit" class="btn btn-warning"><i class="fa fa-save mr-2" aria-hidden="true"></i>
-                        Update Video
-                    </button>
 
-                    <a type="submit" class="btn btn-danger" href="/delete-video/<%= vs.id %>"><i class="fa fa-trash mr-2" aria-hidden="true"></i>
-                        Delete Video
-                    </a>
-
-                </form>
+               
             </div>
         </div>
 </body>
