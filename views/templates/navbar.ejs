@@ -43,7 +43,20 @@
         </a>
       </li> -->
     </ul>
-  
+    
+    <ul class="sidebar-navigation">
+      <li class="header">Categories</li>
+
+      <% if(categories) { %>
+      <% for(var k =0; k < categories.length; k++) { %>
+      <li>
+        <a href="/category/<%= categories[k].uuid %>">
+         <%= categories[k].title %>
+        </a>
+      </li>
+      <% } %>
+      <% } %>
+    </ul>
   
   
     <li class="sidebar-bottom">

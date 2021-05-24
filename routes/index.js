@@ -25,8 +25,11 @@ router.get('/channels', async function (req, res, next) {
         const connection = await connectionPool.getConnection();
         const query = "SELECT * FROM user_follows_channel, channel WHERE user_follows_channel.user_id=? and user_follows_channel.channel_id = channel.id";
         const [channels] = await connection.execute(query, [req.session.user.id]);
+        const query2 = "SELECT * FROM category WHERE user_id= ?";
+        const[categories] = await connection.execute(query2,[req.session.user.id]);
 
-        res.render('channels', { name: req.session.user.name, channels });
+
+        res.render('channels', { name: req.session.user.name, channels,categories });
     }
     else {
         res.redirect('login');
@@ -121,10 +124,14 @@ router.get('/details/:id', async function (req, res, next) {
     const query = "SELECT * FROM user_has_video where user_id=? and video_id=?";
     const query2 = "SELECT * FROM video where id=?";
 
+    const query3 = "SELECT * FROM category WHERE user_id= ?";
+    const[categories] = await connection.execute(query3,[req.session.user.id]);
+
+
     const [videos] = await connection.execute(query, [req.session.user.id, id]);
     const [video] = await connection.execute(query2, [id]);
 
-    res.render('details', { video: videos[0], vs: video[0] });
+    res.render('details', { video: videos[0], vs: video[0], categories});
 });
 
 router.post('/details/:id', async function (req, res, next) {

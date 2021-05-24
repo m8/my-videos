@@ -53,7 +53,12 @@ categoryRouter.get('/:uuid', async function(req,res,next){
         const connection = await connectionPool.getConnection();
         const query = "SELECT * FROM category_has_video,video WHERE category_has_video.category_uuid = ? and video.id = category_has_video.video_id";
         const [videos_of_categories] = await connection.execute(query, [req.params.uuid]);
-        res.render('category_has_video', {videos: videos_of_categories})
+        
+        const query2 = "SELECT * FROM category WHERE user_id= ?";
+        const[categories] = await connection.execute(query2,[req.session.user.id]);
+
+        
+        res.render('category_has_video', {videos: videos_of_categories,categories})
     }
     else{
         res.redirect('login');
