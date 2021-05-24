@@ -51,12 +51,12 @@ categoryRouter.post('/add', async function(req, res, next) {
 categoryRouter.get('/:uuid', async function(req,res,next){
     if(req.session.user){
         const connection = await connectionPool.getConnection();
-        const query = "SELECT * FROM category_has_video,video WHERE category_has_video.category_uuid = ? and video.id = category_has_video.video_id";
+        const query = "SELECT * FROM category_has_video,video, user_has_video WHERE category_has_video.category_uuid = ? and user_has_video.id = category_has_video.video_id and user_has_video.video_id = video.id ";
         const [videos_of_categories] = await connection.execute(query, [req.params.uuid]);
         
         const query2 = "SELECT * FROM category WHERE user_id= ?";
         const[categories] = await connection.execute(query2,[req.session.user.id]);
-
+        console.log(videos_of_categories);
         
         res.render('category_has_video', {videos: videos_of_categories,categories})
     }
@@ -64,6 +64,54 @@ categoryRouter.get('/:uuid', async function(req,res,next){
         res.redirect('login');
     }
 
+});
+
+categoryRouter.get('/details/:uuid', async function (req, res, next) {
+    
+    const { uuid } = req.params;
+    // check if uuid is private or not, if private dont show.
+    const connection = await connectionPool.getConnection();
+
+    const query = "SELECT * FROM category where uuid=?";
+
+    const [category] = await connection.execute(query,[uuid]);
+    console.log(category[0].title);
+    const query2 = "SELECT * FROM category WHERE user_id= ?";
+    const[categories] = await connection.execute(query2,[req.session.user.id]);
+
+    res.render('details_category', {category: category[0] , categories});
+});
+
+categoryRouter.get('/delete/:uuid', async function (req, res, next) {
+    const { uuid } = req.params;
+    const connection = await connectionPool.getConnection();
+
+    const query = "DELETE FROM category WHERE uuid=?";
+
+    const [category] = await connection.execute(query, [uuid]);
+
+
+    res.redirect('/category');
+});
+
+categoryRouter.post('/details/:uuid', async function (req, res, next) {
+    if(req.session.user){
+        const {uuid} = req.params;
+        const { category_title, category_is_private } = req.body;
+        const connection = await connectionPool.getConnection();
+        console.log("title: ",category_title, "is_private: ", category_is_private);
+        const query = "UPDATE category SET title=?, is_private=? WHERE uuid=?";
+
+        const [category] = await connection.execute(query,[category_title, category_is_private, uuid]);
+        
+        const query2 = "SELECT * FROM category WHERE user_id= ?";
+        const[categories] = await connection.execute(query2,[req.session.user.id]);
+        console.log(categories);
+        res.render('category', {categories: categories, name: req.session.user.name});
+    }
+    else{
+        res.redirect('login');
+    }
 });
 
 function uuidv4() {

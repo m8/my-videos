@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var connectionPool = require('../db/conn');
-
+const ytdl = require('ytdl-core');
+const http = require('https')
 /* GET home page. */
 router.get('/', async function (req, res, next) {
     if (req.session.user) {
 
         const connection = await connectionPool.getConnection();
-        const query = "SELECT * FROM (SELECT * FROM user_has_video WHERE user_id = ?) AS W JOIN video on W.video_id = video.id ";
+        const query = "SELECT * FROM video, user_has_video WHERE video.id = user_has_video.video_id and user_has_video.user_id = ?";
         const query2 = "SELECT * FROM category WHERE user_id= ?";
         const[categories] = await connection.execute(query2,[req.session.user.id]);
         const [videos] = await connection.execute(query, [req.session.user.id]);
@@ -45,19 +46,26 @@ router.post('/add-video', async function (req, res, next) {
         const query = "SELECT * FROM video where url=?";
         const [videos] = await connection.execute(query, [video_url]);
 
+        let real_video_title = "";
+
+        let info = await ytdl.getInfo(video_url);
+
+        real_video_title = info.videoDetails.title;
+
+
         if (videos.length == 0) {
             const query3 = "INSERT INTO video (url,name,source) VALUES(?,?,?)"
-            const [rows] = await connection.execute(query3, [video_url, video_name, "youtube"])
-            
-            video_id = rows.insertId;
+            const [rows] = await connection.execute(query3, [video_url, real_video_title, "youtube"])
 
-            const query2 = "INSERT INTO user_has_video (user_id,video_id,notes,rating) VALUES(?,?,?,?)"
-            const [rows2] = await connection.execute(query2, [req.session.user.id, rows.insertId, "", 5])
+            const query2 = "INSERT INTO user_has_video (user_id,video_id,notes,rating,title) VALUES(?,?,?,?,?)"
+            const [rows2] = await connection.execute(query2, [req.session.user.id, rows.insertId, "", 5, video_name])
+            video_id = rows2.insertId;
         }
         else {
-            video_id = videos[0].id;
-            const query3 = "INSERT INTO user_has_video (user_id,video_id,notes,rating) VALUES(?,?,?,?)"
-            const [rows3] = await connection.execute(query3, [req.session.user.id, videos[0].id, "", 5])
+
+            const query3 = "INSERT INTO user_has_video (user_id,video_id,notes,rating,title) VALUES(?,?,?,?,?)"
+            const [rows3] = await connection.execute(query3, [req.session.user.id, videos[0].id, "", 5, video_name])
+            video_id = rows3.insertId;
 
         }
 
@@ -92,11 +100,11 @@ router.post('/add-channel', async function (req, res, next) {
             const query3 = "INSERT INTO channel (url,name) VALUES(?,?)"
             const [rows] = await connection.execute(query3, [channel_url, name])
 
-            console.log("Inseted into channel")
+            console.log("Inserted into channel")
 
             const query2 = "INSERT INTO user_follows_channel (user_id,channel_id,since) VALUES(?, ?, ?)"
             const [rows2] = await connection.execute(query2, [req.session.user.id, rows.insertId, new Date()])
-            console.log("Inseted into user_follows_channel")
+            console.log("Inserted into user_follows_channel")
         }
         else {
             const query3 = "INSERT INTO user_follows_channel (user_id,channel_id,since) VALUES(?, ?, ?)"
@@ -120,31 +128,33 @@ router.get('/login', async function (req, res, next) {
 router.get('/details/:id', async function (req, res, next) {
     const { id } = req.params;
     const connection = await connectionPool.getConnection();
-
-    const query = "SELECT * FROM user_has_video where user_id=? and video_id=?";
-    const query2 = "SELECT * FROM video where id=?";
+    console.log(id);
+    const query = "SELECT * FROM user_has_video, video WHERE user_has_video.user_id=? and user_has_video.video_id=? and video.id = user_has_video.video_id";
+    //const query2 = "SELECT * FROM video where id=?";
 
     const query3 = "SELECT * FROM category WHERE user_id= ?";
     const[categories] = await connection.execute(query3,[req.session.user.id]);
 
 
     const [videos] = await connection.execute(query, [req.session.user.id, id]);
-    const [video] = await connection.execute(query2, [id]);
+    //const [video] = await connection.execute(query2, [id]);
+    console.log(videos[0])
 
-    res.render('details', { video: videos[0], vs: video[0], categories});
+    res.render('details', { video: videos[0], categories});
 });
 
 router.post('/details/:id', async function (req, res, next) {
+   
     if(req.session.user){
 
         const { id } = req.params;
-        const { notes, rating } = req.body;
+        const { notes, rating, title} = req.body;
         
         const connection = await connectionPool.getConnection();
         
-        const query = "UPDATE user_has_video set notes=?, rating=? where user_id=? and video_id=?;";
+        const query = "UPDATE user_has_video set notes=?, title= ?, rating=? where user_id=? and video_id=?;";
         
-        const [videos] = await connection.execute(query, [notes, rating, req.session.user.id, id]);    
+        const [videos] = await connection.execute(query, [notes,title, rating, req.session.user.id, id]);    
     }
     res.redirect('/');
 });
