@@ -2,6 +2,7 @@
 var express = require('express');
 var bookmarkletRouter = express.Router();
 var connectionPool = require('../db/conn');
+const ytdl = require('ytdl-core');
 
 /* GET all categories of user. */
 bookmarkletRouter.get('/add/:url/:name', async (req, res, next) => {
@@ -28,19 +29,26 @@ bookmarkletRouter.post('/add-video', async function (req, res, next) {
         const query = "SELECT * FROM video where url=?";
         const [videos] = await connection.execute(query, [video_url]);
 
+        let real_video_title = "";
+
+        let info = await ytdl.getInfo(video_url);
+
+        real_video_title = info.videoDetails.title;
+
+
         if (videos.length == 0) {
             const query3 = "INSERT INTO video (url,name,source) VALUES(?,?,?)"
-            const [rows] = await connection.execute(query3, [video_url, video_name, "youtube"])
-            
-            video_id = rows.insertId;
+            const [rows] = await connection.execute(query3, [video_url, real_video_title, "youtube"])
 
-            const query2 = "INSERT INTO user_has_video (user_id,video_id,notes,rating) VALUES(?,?,?,?)"
-            const [rows2] = await connection.execute(query2, [req.session.user.id, rows.insertId, "", 5])
+            const query2 = "INSERT INTO user_has_video (user_id,video_id,notes,rating,title) VALUES(?,?,?,?,?)"
+            const [rows2] = await connection.execute(query2, [req.session.user.id, rows.insertId, "", 5, video_name])
+            video_id = rows2.insertId;
         }
         else {
-            video_id = videos[0].id;
-            const query3 = "INSERT INTO user_has_video (user_id,video_id,notes,rating) VALUES(?,?,?,?)"
-            const [rows3] = await connection.execute(query3, [req.session.user.id, videos[0].id, "", 5])
+
+            const query3 = "INSERT INTO user_has_video (user_id,video_id,notes,rating,title) VALUES(?,?,?,?,?)"
+            const [rows3] = await connection.execute(query3, [req.session.user.id, videos[0].id, "", 5, video_name])
+            video_id = rows3.insertId;
 
         }
 
