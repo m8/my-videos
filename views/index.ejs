@@ -5,11 +5,11 @@
   <% include templates/head.ejs %>
   <style>
      .title {
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-                max-width: 35ch;
-            }
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 35ch;
+        }
   </style>
 </head>
 
@@ -53,7 +53,7 @@
                       </p>
                     </div>
                     <div class="card-footer">
-                      <a href="/details/<%= videos[k].video_id %>" class="btn btn-success">Details</a>
+                      <a href="/details/<%= videos[k].id %>" class="btn btn-success">Details</a>
                     </div>
                   </div>  
                 </div>

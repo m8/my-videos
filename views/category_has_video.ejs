@@ -35,10 +35,27 @@
           </div>
         </div>
 
-        
+        <div class="row">
+
+        </div>
+
+        <% if(channels.length != 0) { %>
+          <h3>Channels</h3>
+
+          <div class="row" style="padding-left: 10px;">
+            <% for(var k=0; k < channels.length; k++) { %>
+            
+                <a href="/channel/<%=channels[k].url %>" style="padding: 5px; border-radius: 40px !important;" ><img class="thumbnail rounded" style=" border-radius: 40px !important; width: 60px;" src="<%= channels[k].img_url %>"></a>    
+
+            <% } %>
+          </div>
+
+          <div class="mb-3"></div>
+          <% } %>
+          
+          <h3>Videos</h3>
 
           <div class="row">
-
             <% for(var k=0; k < videos.length; k++) { %>
 
                 <div class="col-2">
@@ -51,13 +68,14 @@
                       </p>
                     </div>
                     <div class="card-footer">
-                      <a href="/details/<%= videos[k].video_id %>" class="btn btn-success">Details</a>
+                      <a href="/details/<%= videos[k].id %>" class="btn btn-success">Details</a>
                     </div>
                   </div>  
                 </div>
 
               <% } %>
           </div>
+  
       </div>
     </div>
 </body>

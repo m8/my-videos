@@ -36,7 +36,17 @@
         
                             <label for="exampleInputEmail1" class="form-label">URL</label>
                             <a type="text" disabled class="form-control" name="video_url" href="<%= video.url %>" id="exampleInputEmail1"><%= video.url %></a>
-        
+                            
+                            <label for="exampleInputEmail1" class="form-label">Category</label>
+                            <select class="js-example-basic-multiple form-control my-2" name="categories" multiple="multiple">
+                                <% for(var i=0; i < categories.length; i++) { %>
+                                    <option value="<%= categories[i].uuid %>">
+                                      <%= categories[i].title %>
+                                    </option>
+                                    <% }%>
+                            </select>
+                            <div style="padding-top: 10px;"></div>
+
                             <label for="exampleInputEmail1" class="form-label">Point</label>
                             <input type="number" class="form-control" name="rating" value="<%= video.rating %>" id="exampleInputEmail1">
         
@@ -64,9 +74,14 @@
 </body>
 
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
 var simplemde = new SimpleMDE({ element: document.getElementById("texts") });
 
+$(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
 </script>
 
 </html>

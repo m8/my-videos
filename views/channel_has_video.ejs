@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include templates/head.ejs %>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+        <style>
+            .form-control {
+                margin-bottom: 15px;
+            }
+
+            .jumbotron {
+                background-image: url("<%= source.authorBanners[1].url %>");
+                background-size: cover;
+                height: 10%;
+            }
+
+            .title {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                max-width: 35ch;
+            }
+        </style>
+</head>
+
+<body>
+
+    <% include templates/navbar.ejs %>
+        <div class="content-container">
+            <div class="container-fluid">
+
+
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between mb-5">
+                    <div class="d-flex">
+                        <img src="<%= source.authorThumbnails[1].url %>" alt="Profile Image" class="rounded">
+                        <div class="p-2">
+                            <h2 style="flex: content;">
+                                <%= source.author %>
+                            </h2>
+                            <h5>
+                                <%= source.subscriberText %>
+                            </h5>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-success" onclick="add_category()">Add to Category</button>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <% for(var k=0; k < videos.length; k++) { %>
+
+                        <div  class="col-2 flex align-items-stretch">
+
+                            <div class="card mt-2">
+                                <img class="card-img-top" src="<%= videos[k].videoThumbnails[0].url %>"
+                                    alt="Card image cap" onclick='changeUrl("<%= videos[k].videoId %>")'>
+                                <div class="card-body">
+                                    <p class="card-text title">
+                                        <%= videos[k].title %>
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-success" onclick='fill("<%= videos[k].videoId %>","<%= videos[k].title %>")'><i class="fa fa-save"></i> Save Video</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <% } %>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="modal bd-example-modal-lg  fade " id="modal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <form method="POST" action="/add-video">
+                            <label for="exampleInputEmail1" class="form-label">Video Name</label>
+                            <input type="text" class="form-control" id="video_name" name="video_name" id="exampleInputEmail1" value="">
+                            <label for="exampleInputEmail1" class="form-label">Video URL</label>
+                            <input type="text" class="form-control" id="video_url" name="video_url" id="exampleInputEmail1" value="">
+                            <label for="exampleInputEmail1" class="form-label">Category</label>
+                            <select class="form-control" name="uuid">
+                                <option> </option>
+                                <% for(var i=0; i < categories.length; i++) { %>
+                                    <option value="<%= categories[i].uuid %>">
+                                        <%= categories[i].title %>
+                                    </option>
+                                    <% }%>
+                            </select>
+                            <button type="submit" class="btn btn-success mt-2">Add Video</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal bd-example-modal-lg  fade " id="modal2" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <form method="POST" action="/category/add-channel">
+                            <label for="exampleInputEmail1" class="form-label">Channel</label>
+                            <input name="channel_id" hidden value="<%= channel.id %>">
+                            <label for="exampleInputEmail1" class="form-label">Category</label>
+                            <select class="form-control" name="uuid">
+                                <option> </option>
+                                <% for(var i=0; i < categories.length; i++) { %>
+                                    <option value="<%= categories[i].uuid %>">
+                                        <%= categories[i].title %>
+                                    </option>
+                                    <% }%>
+                            </select>
+                            <button type="submit" class="btn btn-success mt-2">Add to Category</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <script>
+            function changeUrl(it) {
+                let lc = `https://www.youtube.com/watch?v=${it}`;
+                window.location.href = lc;
+            }
+
+            function add_category(){
+                $('#modal2').modal('show');
+            }
+
+            function fill(x,y){
+                console.log(x,y);
+                $("#video_name").val(y);
+                $("#video_url").val(`https://www.youtube.com/watch?v=${x}`);
+                $('#modal').modal('show');
+            }
+        </script>
+</body>
+
+</html>

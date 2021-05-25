@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <% include templates/head.ejs %>
-  
-  </head>
 
-  <body>
-    <% include templates/navbar.ejs %>
+<head>
+  <% include templates/head.ejs %>
+
+</head>
+
+<body>
+  <% include templates/navbar.ejs %>
 
     <div class="content-container">
 
@@ -14,72 +15,80 @@
 
         <h3>Welcome to Channels Page. <i class="fa fa-video"></i></h3>
         <hr>
-        Hello, <%= name %> The channels you follow
-        <button id="add" class="btn btn-info"><i class="fa fa-plus"></i>Add Channel</button>
-        <table class="table table-striped my-4">
-
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">URL</th>
-              <th scope="col">Since</th>
-            </tr>
-
-          </thead>
-          <% if (channels) { %>
-          <tbody>
-            <% for(var i=0; i < channels.length; i++) { %>
+        <div class="d-flex justify-content-between">
+          Hello, <%= name %> The channels you follow
+          <button id="add" class="btn btn-info"><i class="fa fa-plus"></i>Add Channel</button>
+        </div>
+          <table class="table table-striped my-4">
+            
+            <thead>
               <tr>
-                
-                <td>
-                  <%= channels[i].name %>
-                </td>
-                
-                <td>
-                  <a href="/channel/<%= channels[i].url %>"> See Channel</a> 
-                </td>
-
-                <td>
-                    <%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(channels[i].since) %>
-                  </td>
+                <th scope="col">Name</th>
+                <th scope="col">URL</th>
+                <th scope="col">Since</th>
+                <th scope="col"></th>
               </tr>
-              <% } %>
 
-          </tbody>
-          <% } %>
-        </table>
-        
+            </thead>
+            <% if (channels) { %>
+              <tbody>
+                <% for(var i=0; i < channels.length; i++) { %>
+                  <tr>
+
+                    <td>
+                      <%= channels[i].name %>
+                    </td>
+
+                    <td>
+                      <a href="/channel/<%= channels[i].url %>"> See Channel</a>
+                    </td>
+
+                    <td>
+                      <%= new Intl.DateTimeFormat('en-GB', { year: 'numeric' , month: 'long' , day: '2-digit'
+                        }).format(channels[i].since) %>
+                    </td>
+
+                    <td style="text-align: end;">
+                      <a class="btn btn-danger" href="/channel/delete/<%= channels[i].url%>"><i class="fa fa-trash"></i> Delete Channel</a>
+                    </td>
+
+                  </tr>
+                  <% } %>
+
+              </tbody>
+              <% } %>
+          </table>
+
       </div>
     </div>
-    </body>
+</body>
 
-    <div class="modal bd-example-modal-lg  fade " id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
+<div class="modal bd-example-modal-lg  fade " id="modal" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
 
-            <div class="modal-body">
-              <form method="POST" action="/add-channel">
-                <label for="exampleInputEmail1" class="form-label">Name</label>
-                <input type="text" class="form-control" name="name" id="exampleInputEmail1">
+      <div class="modal-body">
+        <form method="POST" action="/channel/add">
 
-                <label for="exampleInputEmail1" class="form-label">Channel Url</label>
-                <input type="text" class="form-control" name="channel_url" id="exampleInputEmail1">
-                
-                <button type="submit" class="btn btn-success mt-2">Follow Channel</button>
-              </form>
-            </div>
+          <label for="exampleInputEmail1" class="form-label">Channel Url</label>
+          <input type="text" class="form-control" name="channel_url" id="exampleInputEmail1">
 
-          </div>
-        </div>
+          <button type="submit" class="btn btn-success mt-2">Follow Channel</button>
+        </form>
       </div>
 
-    <script>
-    
-    $('#add').on('click',function(){
-      $('#modal').modal('show');
-    })
+    </div>
+  </div>
+</div>
+
+<script>
+
+  $('#add').on('click', function () {
+    $('#modal').modal('show');
+  })
 
 
-    </script>
+</script>
+
 </html>
