@@ -344,7 +344,7 @@
           <div id="user-follows-channel" class="tab-pane fade">
             <div class="d-flex py-2 flex-row justify-content-between">
               <h3>User Follows Channel Table</h3>
-              <a class="btn btn-primary" href="/admin/add-category-has-video" role="button"><i class="fa fa-plus mr-2"
+              <a class="btn btn-primary" href="/admin/add-user-follows-channel" role="button"><i class="fa fa-plus mr-2"
                   aria-hidden="true"></i>User Follows Channel</a>
             </div>
             <table class="table table-striped">
@@ -355,20 +355,23 @@
                   <th scope="col">Since</th>
                 </tr>
               </thead>
-              <% if (category_has_video) { %>
+              <% if (user_follows_channel) { %>
                 <tbody>
+                  <% for(var i=0; i < user_follows_channel.length; i++) { %>
                     <tr>
                       <td>
-                        7
+                        <%= user_follows_channel[i].user_id %>
                       </td>
                       <td>
-                        1
+                        <%= user_follows_channel[i].channel_id %>
                       </td>
                       <td>
-                        2021
+                        <%= user_follows_channel[i].since %>
+                        
                       </td>
+                      
                     </tr>
-
+                    <% } %>
                 </tbody>
                 <% } %>
 
@@ -388,17 +391,19 @@
                   <th scope="col">Channel ID</th>
                 </tr>
               </thead>
-              <% if (category_has_video) { %>
+              <% if (category_has_channel) { %>
                 <tbody>
+                  <% for(var i=0; i < category_has_channel.length; i++) { %>
                     <tr>
                       <td>
-                        1b529ec0-36ee-4d7d-ae61-cf417317f981 
+                        <%= category_has_channel[i].category_uuid %>
                       </td>
                       <td>
-                          3
+                        <%= category_has_channel[i].channel_id %>
                       </td>
+                      
                     </tr>
-
+                    <% } %>
                 </tbody>
                 <% } %>
 

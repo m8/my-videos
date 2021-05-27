@@ -63,6 +63,11 @@ const add_video_channel = {
         title: "Name",
         name: "name",
         type: "text"
+    },
+    {
+        title: "Img Url",
+        name: "img_url",
+        type: "text"
     }
     ]
 }
@@ -131,6 +136,43 @@ const user_video_model = {
     ]
 }
 
+const user_follows_channel_model = {
+    title: "User Follows Channel",
+    action: "/admin/add-user-follows-channel",
+    inputs: [{
+        title: "User Id",
+        name: "user_id",
+        type: "integer"
+    },
+    {
+        title: "Channel Id",
+        name: "channel_id",
+        type: "integer"
+    },
+    {
+        title: "Since",
+        name: "since",
+        type: "date"
+    },
+    ]
+}
+
+const category_has_channel = {
+    title: "Add Category Has Channel",
+    action: "/admin/add-category-has-channel",
+    inputs: [{
+        title: "Channel Id",
+        name: "channel_id",
+        type: "integer"
+    },
+    {
+        title: "Category UUID",
+        name: "category_uuid",
+        type: "text"
+    }
+    ]
+}
 
 
-module.exports = {add_video_model,add_user_model,add_video_category,add_video_channel,user_video_model,add_category_has_video}
+
+module.exports = {category_has_channel,user_follows_channel_model,add_video_model,add_user_model,add_video_category,add_video_channel,user_video_model,add_category_has_video}

@@ -41,7 +41,7 @@
 
             <% for(var k=0; k < videos.length; k++) { %>
 
-                <div class="col col-sm-3 col-lg-2">
+                <div class="col-3 ssw">
                   <div onclick='document.location = "<%= videos[k].url %>"' class="card my-1">
                     <img class="card-img-top" src="https://img.youtube.com/vi/<%= videos[k].url.split('?v=')[1] %>/0.jpg"
                     alt="Card image cap">
@@ -101,7 +101,7 @@
   $('#searchbox-input').on('keyup change', function () {
     console.log("asd")
     $('.card').show();
-    $('.col-2').show();
+    $('.ssw').show();
     var filter = $(this).val(); // get the value of the input, which we filter on
     $('.content-container').find(".card-body:not(:contains(" + filter + "))").parent().css('display','none');
     $('.content-container').find(".card-body:not(:contains(" + filter + "))").parent().parent().css('display','none');

@@ -10,38 +10,98 @@ var form_models = require('./models/form_model');
 router.get('/', async function (req, res, next) {
     const connection = await connectionPool.getConnection();
 
+    const query = "SELECT * FROM category WHERE category.user_id = ?";
+    const [categories] = await connection.execute(query, [req.session.user.id]);
+
+
     const [userRows, fields] = await connection.execute("SELECT * FROM user")
     const [videoRows, videoFields] = await connection.execute("SELECT * FROM video")
     const [categoryRows, categoryFields] = await connection.execute("SELECT * FROM category")
     const [channelRows, channelFields] = await connection.execute("SELECT * FROM channel")
     const [userVideosRows, userVideosFields] = await connection.execute("SELECT * FROM user_has_video")
     const [categoryHasVideoRow, categoryHasVideoField] = await connection.execute("SELECT * FROM category_has_video")
+    const [user_follows_channel] = await connection.execute("SELECT * FROM user_follows_channel")
+    const [category_has_channel] = await connection.execute("SELECT * FROM category_has_channel")
 
-    res.render('admin', { users: userRows, videos: videoRows, category: categoryRows, channel: channelRows, user_videos: userVideosRows, category_has_video: categoryHasVideoRow, form_models });
+    res.render('admin', { category_has_channel,user_follows_channel,categories, users: userRows, videos: videoRows, category: categoryRows, channel: channelRows, user_videos: userVideosRows, category_has_video: categoryHasVideoRow, form_models });
 });
 
-router.get('/add-user', (req, res, next) => {
-    res.render('admin_add_db', { form: models.add_user_model })
+router.get('/add-user', async (req, res, next) => {
+    const connection = await connectionPool.getConnection();
+
+    const query = "SELECT * FROM category WHERE category.user_id = ?";
+    const [categories] = await connection.execute(query, [req.session.user.id]);
+
+
+    res.render('admin_add_db', { form: models.add_user_model, categories})
 })
 
-router.get('/add-video', (req, res, next) => {
-    res.render('admin_add_db', { form: models.add_video_model })
+router.get('/add-category-has-channel', async (req, res, next) => {
+    const connection = await connectionPool.getConnection();
+
+    const query = "SELECT * FROM category WHERE category.user_id = ?";
+    const [categories] = await connection.execute(query, [req.session.user.id]);
+
+
+    res.render('admin_add_db', { form: models.category_has_channel, categories})
 })
 
-router.get('/add-channel', (req, res, next) => {
-    res.render('admin_add_db', { form: models.add_video_channel })
+router.get('/add-user-follows-channel', async (req, res, next) => {
+    const connection = await connectionPool.getConnection();
+
+    const query = "SELECT * FROM category WHERE category.user_id = ?";
+    const [categories] = await connection.execute(query, [req.session.user.id]);
+
+    res.render('admin_add_db', { form: models.user_follows_channel_model, categories})
 })
 
-router.get('/add-category', (req, res, next) => {
-    res.render('admin_add_db', { form: models.add_video_category })
+router.get('/add-video', async (req, res, next) => {
+    const connection = await connectionPool.getConnection();
+
+    const query = "SELECT * FROM category WHERE category.user_id = ?";
+    const [categories] = await connection.execute(query, [req.session.user.id]);
+
+
+    res.render('admin_add_db', { form: models.add_video_model, categories })
 })
 
-router.get('/add-user-video', (req, res, next) => {
-    res.render('admin_add_db', { form: models.user_video_model })
+router.get('/add-channel', async (req, res, next) => {
+    const connection = await connectionPool.getConnection();
+
+    const query = "SELECT * FROM category WHERE category.user_id = ?";
+    const [categories] = await connection.execute(query, [req.session.user.id]);
+
+    res.render('admin_add_db', { form: models.add_video_channel, categories })
 })
 
-router.get('/add-category-has-video', (req, res, next) => {
-    res.render('admin_add_db', { form: models.add_category_has_video })
+router.get('/add-category', async (req, res, next) => {
+    const connection = await connectionPool.getConnection();
+
+    const query = "SELECT * FROM category WHERE category.user_id = ?";
+    const [categories] = await connection.execute(query, [req.session.user.id]);
+
+
+    res.render('admin_add_db', { form: models.add_video_category, categories })
+})
+
+router.get('/add-user-video', async (req, res, next) => {
+    const connection = await connectionPool.getConnection();
+
+    const query = "SELECT * FROM category WHERE category.user_id = ?";
+    const [categories] = await connection.execute(query, [req.session.user.id]);
+
+
+    res.render('admin_add_db', { form: models.user_video_model, categories })
+})
+
+router.get('/add-category-has-video',async (req, res, next) => {
+    const connection = await connectionPool.getConnection();
+
+    const query = "SELECT * FROM category WHERE category.user_id = ?";
+    const [categories] = await connection.execute(query, [req.session.user.id]);
+
+
+    res.render('admin_add_db', { form: models.add_category_has_video, categories })
 })
 
 router.post('/add-user', async function (req, res, next) {
@@ -89,10 +149,10 @@ router.post('/add-category', async function (req, res, next) {
 });
 
 router.post('/add-channel', async function (req, res, next) {
-    let { url, name} = req.body;
+    let { url, name, img_url} = req.body;
     const connection = await connectionPool.getConnection();
-    const query = "INSERT INTO channel (url,name) VALUES(?,?)"
-    const [rows] = await connection.execute(query, [url,name])
+    const query = "INSERT INTO channel (url,name,img_url) VALUES(?,?,?)"
+    const [rows] = await connection.execute(query, [url,name,img_url])
 
     res.redirect('/admin');
 });
@@ -107,6 +167,27 @@ router.post('/add-category-has-video', async function (req, res, next) {
 
     res.redirect('/admin');
 });
+
+router.post('/add-category-has-channel', async function (req, res, next) {
+    let { category_uuid, channel_id } = req.body;
+    const connection = await connectionPool.getConnection();
+    const query = "INSERT INTO category_has_channel (category_uuid,channel_id) VALUES (?,?)"
+    const [rows] = await connection.execute(query, [category_uuid, channel_id])
+
+    res.redirect('/admin');
+});
+
+
+router.post('/add-user-follows-channel', async function (req, res, next) {
+    let { user_id, channel_id,since } = req.body;
+
+    const connection = await connectionPool.getConnection();
+    const query = "INSERT INTO user_follows_channel (user_id,channel_id,since) VALUES (?,?,?)"
+    const [rows] = await connection.execute(query, [user_id,channel_id,since])
+
+    res.redirect('/admin');
+});
+
 
 
 

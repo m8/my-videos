@@ -49,7 +49,7 @@ router.post('/add-video', async function (req, res, next) {
         let real_video_title = "";
 
         let info = await ytdl.getInfo(video_url);
-
+        console.log(info);
         real_video_title = info.videoDetails.title;
 
 
@@ -71,6 +71,7 @@ router.post('/add-video', async function (req, res, next) {
             
             const query5 = "SELECT * FROM user_has_video, video WHERE user_has_video.video_id = video.id and video.url = ? "
             const [sw] = await connection.execute(query5, [video_url])
+      
 
             if(sw.length == 0){
                 const query3 = "INSERT INTO user_has_video (user_id,video_id,notes,rating,title) VALUES(?,?,?,?,?)"
